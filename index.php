@@ -2,6 +2,7 @@
 
 
 require 'flight/Flight.php';
+use Respuesta as BA;
 Flight::register('db', 'PDO', array('sqlsrv:Server=localhost;Database=Productos','sa','musica0102'));
 
 
@@ -79,7 +80,7 @@ Flight::route('POST /tipo', function () {
     $sentencia->bindParam(1,$nombre);
     $sentencia->bindParam(2,$estado);
     $sentencia ->execute();
-    Flight::jsonp(["Tipo agregado Correctamente"]);
+    Flight::json(["Tipo agregado Correctamente"]);
       
 });
 
@@ -97,7 +98,7 @@ Flight::route('POST /productos', function () {
     $sentencia->bindParam(3,$marca);
     $sentencia->bindParam(4,$estado);
     $sentencia ->execute();
-    Flight::jsonp(["Producto agregado correctamente"]);
+    Flight::json(["Producto agregado correctamente"]);
       
 });
 
@@ -114,7 +115,7 @@ Flight::route('POST /caracteristicas', function () {
   
     $sentencia ->execute();
 
-    Flight::jsonp(["Caracteristica agregada correctamente"]);
+    Flight::json(["Caracteristica agregada correctamente"]);
       
 });
 
@@ -129,7 +130,7 @@ Flight::route('PUT /delete/tipo', function () {
     $sentencia->bindParam(2,$id);
     
     $sentencia ->execute();
-    Flight::jsonp(["Tipo eliminado Correctamente"]);
+    Flight::json(["Tipo eliminado Correctamente"]);
     
       
 });
@@ -142,7 +143,7 @@ Flight::route('PUT /delete/caracteristica', function () {
     $sentencia->bindParam(2,$id);
     
     $sentencia ->execute();
-    Flight::jsonp(["Caraacteristica eliminada correctamente Correctamente"]);
+    Flight::json(["Caraacteristica eliminada correctamente Correctamente"]);
     
       
 });
@@ -164,7 +165,7 @@ Flight::route('PUT /delete/producto', function () {
     $sentencia2 ->execute();
 
 
-    Flight::jsonp(["Producto eliminado Correctamente"]);
+    Flight::json(["Producto eliminado Correctamente"]);
     
       
 });
@@ -179,7 +180,7 @@ Flight::route('PUT /update/tipo', function () {
     $sentencia->bindParam(1,$nombre);
     $sentencia->bindParam(2,$id);
     $sentencia ->execute();
-    Flight::jsonp(["Tipo actualizado Correctamente"]);
+    Flight::json(["Tipo actualizado Correctamente"]);
     
       
 });
@@ -189,18 +190,15 @@ Flight::route('PUT /update/producto', function () {
     $nombre=(Flight::request()->data->Nombre);
     $tipo=(Flight::request()->data->Tipo);
     $marca=(Flight::request()->data->Marca);
-
-
-
-    $sql="UPDATE Productos SET Nombre=?,Tipo=?,Marca=? WHERE IDTipo=?";
+    $sql="UPDATE Productos SET Nombre=?,Tipo=?,Marca=? WHERE IDProducto=?";
     $sentencia=Flight::db()->prepare($sql);
     $sentencia->bindParam(1,$nombre);
     $sentencia->bindParam(2,$tipo);
     $sentencia->bindParam(3,$marca);
     $sentencia->bindParam(4,$id);
-    
+
     $sentencia ->execute();
-    Flight::jsonp(["Producto actualizado Correctamente"]);
+    Flight::json(Flight::response());
     
       
 });
@@ -217,7 +215,9 @@ Flight::route('PUT /update/caracteristica', function () {
    
     
     $sentencia ->execute();
-    Flight::jsonp(["Caracteristica del producto actualizada Correctamente"]);
+    $Mensaje="Mensaje";
+    $Exito="Exito";
+    Flight::json([$Mensaje,$Exito]);
     
       
 });
@@ -226,8 +226,13 @@ Flight::route('PUT /update/caracteristica', function () {
 Flight::before('json', function () {
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET,PUT,POST,DELETE');
-    header('Access-Control-Allow-Headers: Content-Type');
+    header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 });
+
+
+
+
+
 
 
 
