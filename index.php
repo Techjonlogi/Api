@@ -11,7 +11,7 @@ Flight::route('GET /get/tipo', function () {
     $estado =1;
     $sentencia= Flight::db()->prepare("SELECT * FROM Tipo WHERE Estado = $estado");
     $sentencia->execute();
-    $datos=$sentencia->fetchAll();
+    $datos=$sentencia->fetchAll(PDO::FETCH_ASSOC);
     Flight::json($datos);
 
     
@@ -21,7 +21,7 @@ Flight::route('GET /get/tipo/@id', function ($id) {
     $sentencia= Flight::db()->prepare("SELECT * FROM Tipo WHERE IDTipo=?");
     $sentencia->bindParam(1,$id);
     $sentencia->execute();
-    $datos=$sentencia->fetchAll();
+    $datos=$sentencia->fetchAll(PDO::FETCH_ASSOC);
     Flight::json($datos);
 });
 
@@ -30,7 +30,7 @@ Flight::route('GET /get/productos', function () {
     $estado =1;
     $sentencia= Flight::db()->prepare("SELECT * FROM Productos WHERE Estado = $estado");
     $sentencia->execute();
-    $datos=$sentencia->fetchAll();
+    $datos=$sentencia->fetchAll(PDO::FETCH_ASSOC);
     Flight::json($datos);
     
    
@@ -40,7 +40,7 @@ Flight::route('GET /get/producto/@id', function ($id) {
     $sentencia= Flight::db()->prepare("SELECT * FROM Productos WHERE IDProducto=?");
     $sentencia->bindParam(1,$id);
     $sentencia->execute();
-    $datos=$sentencia->fetchAll();
+    $datos=$sentencia->fetchAll(PDO::FETCH_ASSOC);
     Flight::json($datos);
 });
 
@@ -49,7 +49,7 @@ Flight::route('GET /get/caracteristicas', function () {
     $estado =1;
     $sentencia= Flight::db()->prepare("SELECT * FROM Caracteristicas WHERE Estado = $estado");
     $sentencia->execute();
-    $datos=$sentencia->fetchAll();
+    $datos=$sentencia->fetchAll(PDO::FETCH_ASSOC);
     Flight::json($datos);
     
    
@@ -59,7 +59,7 @@ Flight::route('GET /get/caracteristicas/@id', function ($id) {
     $sentencia= Flight::db()->prepare("SELECT * FROM Caracteristicas WHERE idCaracteristica=?");
     $sentencia->bindParam(1,$id);
     $sentencia->execute();
-    $datos=$sentencia->fetchAll();
+    $datos=$sentencia->fetchAll(PDO::FETCH_ASSOC);
     Flight::json($datos);
 });
 
