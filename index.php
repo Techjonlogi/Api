@@ -159,7 +159,6 @@ Flight::route('PUT /delete/producto', function () {
 Flight::route('PUT /update/tipo', function () {
     $id=(Flight::request()->data->IDTipo);
     $nombre=(Flight::request()->data->Nombre);
-
     $sql="UPDATE Tipo SET Nombre=? WHERE IDTipo=?";
     $sentencia=Flight::db()->prepare($sql);
     $sentencia->bindParam(1,$nombre);
