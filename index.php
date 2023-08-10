@@ -62,6 +62,13 @@ Flight::route('GET /get/caracteristicas/@id', function ($id) {
     $datos=$sentencia->fetchAll(PDO::FETCH_ASSOC);
     Flight::json($datos);
 });
+Flight::route('GET /get/caracteristicas/producto/@id', function ($id) {
+    $sentencia= Flight::db()->prepare("SELECT * FROM Caracteristicas WHERE IDProducto=?");
+    $sentencia->bindParam(1,$id);
+    $sentencia->execute();
+    $datos=$sentencia->fetchAll(PDO::FETCH_ASSOC);
+    Flight::json($datos);
+});
 
 //Metodos post de cada tabla
 Flight::route('POST /tipo', function () {
@@ -143,12 +150,20 @@ Flight::route('PUT /delete/caracteristica', function () {
 Flight::route('PUT /delete/producto', function () {
     $id=(Flight::request()->data->IDProducto);
     $estado = 0;
-    $sql="UPDATE Caracteristicas SET Estado=? WHERE IDProducto=?";
+    $sql="UPDATE Productos SET Estado=? WHERE IDProducto=?";
     $sentencia=Flight::db()->prepare($sql);
     $sentencia->bindParam(1,$estado);
     $sentencia->bindParam(2,$id);
-    
     $sentencia ->execute();
+
+
+    $sqlCar="UPDATE Caracteristicas SET Estado=? WHERE IDProducto=?";
+    $sentencia2=Flight::db()->prepare($sqlCar);
+    $sentencia2->bindParam(1,$estado);
+    $sentencia2->bindParam(2,$id);
+    $sentencia2 ->execute();
+
+
     Flight::jsonp(["Producto eliminado Correctamente"]);
     
       
